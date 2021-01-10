@@ -8,10 +8,12 @@ import NominationList from './NominationList.js';
    render() {
     return (
       <div className="App">
-        <h1>The Shoppies</h1>
-        <Search />
-        <ResultList />
-        <NominationList />
+        <div className="wrapper">
+          <h1>The Shoppies</h1>
+          <Search />
+          <ResultList />
+          <NominationList />
+        </div>
       </div>
     );
   }
