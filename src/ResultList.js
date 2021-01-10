@@ -1,6 +1,6 @@
 function ResultList () {
     return ( 
-        <div>
+        <div className="ResultList">
             ResultList
         </div>
     )

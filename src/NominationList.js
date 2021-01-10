@@ -1,7 +1,9 @@
 
 function NominaionList(){
     return (
-        <div>NominationList</div>
+        <div className="NominationList">
+            NominationList
+        </div>
     )
 }
 
