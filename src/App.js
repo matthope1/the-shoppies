@@ -1,16 +1,33 @@
 import { Component } from 'react';
 import './App.css';
-import Search from './Search.js';
+import SearchForm from './SearchForm.js';
 import ResultList from './ResultList.js';
 import NominationList from './NominationList.js';
 
  class App extends Component {
-   render() {
+
+  constructor() {
+    super();
+    this.state = {
+
+    }
+  }
+
+  componentDidMount() {
+
+  }
+
+  render() {
+    
+    fetch('http://www.omdbapi.com/?s=Star&apikey=82a91ad2')
+    .then(response => response.json())
+    .then(data => console.log(data));
+
     return (
       <div className="App">
         <div className="wrapper">
           <h1>The Shoppies</h1>
-          <Search />
+          <SearchForm label="Movie Title" placeholder="Search Movies" id="movie-input" />
           <ResultList />
           <NominationList />
         </div>
