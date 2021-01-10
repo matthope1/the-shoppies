@@ -9,20 +9,40 @@ import NominationList from './NominationList.js';
   constructor() {
     super();
     this.state = {
-      value: '',
+      movieSearchInput: '',
     };
 
     this.handleInputSubmit = this.handleInputSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.movieSearchQuery = this.movieSearchQuery.bind(this);
+  }
+
+  movieSearchQuery(movieTitle) {
+    let endPoint = `http://www.omdbapi.com/?s=${movieTitle}&apikey=82a91ad2`;
+    let res = '';
+    fetch(endPoint)
+    .then(response => response.json())
+    .then(data => {
+        res = data;
+      }
+    );
+
+    if (!res) {
+      console.log("Error: movieSearchQuery");
+      return null;
+    }
+
+    return res;
   }
 
   handleInputSubmit(event) {
-    console.log(this.state.value);
+    let res = this.movieSearchQuery(this.state.movieSearchInput);
+    console.log(res);
     event.preventDefault();
   }
 
   handleInputChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({movieSearchInput: event.target.value});
   }
 
   componentDidMount() {
