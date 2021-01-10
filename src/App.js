@@ -9,8 +9,20 @@ import NominationList from './NominationList.js';
   constructor() {
     super();
     this.state = {
+      value: '',
+    };
 
-    }
+    this.handleInputSubmit = this.handleInputSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputSubmit(event) {
+    console.log(this.state.value);
+    event.preventDefault();
+  }
+
+  handleInputChange(event) {
+    this.setState({value: event.target.value});
   }
 
   componentDidMount() {
@@ -18,16 +30,17 @@ import NominationList from './NominationList.js';
   }
 
   render() {
-    
-    fetch('http://www.omdbapi.com/?s=Star&apikey=82a91ad2')
-    .then(response => response.json())
-    .then(data => console.log(data));
 
     return (
       <div className="App">
         <div className="wrapper">
           <h1>The Shoppies</h1>
-          <SearchForm label="Movie Title" placeholder="Search Movies" id="movie-input" />
+          <SearchForm 
+            label="Movie Title" 
+            placeholder="Search Movies"
+            id="movie-input" 
+            handleSubmit={this.handleInputSubmit} 
+            handleChange={this.handleInputChange}/>
           <ResultList />
           <NominationList />
         </div>
