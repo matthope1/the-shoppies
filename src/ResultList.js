@@ -1,7 +1,15 @@
-function ResultList () {
+function ResultList(props) {
+    // displays the results of an api call
+    // takes an array of objects through dataList prop
+
+    let display = "nothing for now";
+    if (props.dataList) {
+        display = props.dataList;
+    }
+
     return ( 
         <div className="ResultList">
-            ResultList
+            <p>{display}</p>
         </div>
     )
 }

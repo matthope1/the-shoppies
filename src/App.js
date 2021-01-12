@@ -3,41 +3,45 @@ import './App.css';
 import SearchForm from './SearchForm.js';
 import ResultList from './ResultList.js';
 import NominationList from './NominationList.js';
+import firebase from './firebase';
+import 'firebase/auth';
 
- class App extends Component {
+const auth = firebase.auth();
+
+class App extends Component {
 
   constructor() {
     super();
     this.state = {
       movieSearchInput: '',
+      movieQueryRes: [],
+      user: null, 
     };
 
     this.handleInputSubmit = this.handleInputSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.movieSearchQuery = this.movieSearchQuery.bind(this);
+    this.writeUserData = this.writeUserData.bind(this);
   }
 
   movieSearchQuery(movieTitle) {
     let endPoint = `http://www.omdbapi.com/?s=${movieTitle}&apikey=82a91ad2`;
-    let res = '';
+
     fetch(endPoint)
     .then(response => response.json())
     .then(data => {
-        res = data;
+
+        let dataList = [...data.Search];
+
+        // this.setState({
+        //   movieQueryRes: dataList[0],
+        // });
       }
     );
-
-    if (!res) {
-      console.log("Error: movieSearchQuery");
-      return null;
-    }
-
-    return res;
   }
 
   handleInputSubmit(event) {
-    let res = this.movieSearchQuery(this.state.movieSearchInput);
-    console.log(res);
+    this.movieSearchQuery(this.state.movieSearchInput);
     event.preventDefault();
   }
 
@@ -45,8 +49,26 @@ import NominationList from './NominationList.js';
     this.setState({movieSearchInput: event.target.value});
   }
 
-  componentDidMount() {
+  writeUserData(userId) {
+    firebase.database().ref('users/' + userId).set({
+      uid: userId
+    })
+  }
 
+  componentDidMount() {
+    if (!(this.state.user)) {
+      auth.signInAnonymously()
+      .then(() => {
+        this.setState({user: auth.currentUser}, function() {
+          this.writeUserData(this.state.user.uid);
+        });
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode);
+      });
+    }
   }
 
   render() {
@@ -61,7 +83,7 @@ import NominationList from './NominationList.js';
             id="movie-input" 
             handleSubmit={this.handleInputSubmit} 
             handleChange={this.handleInputChange}/>
-          <ResultList />
+          <ResultList dataList={this.state.movieQueryRes} />
           <NominationList />
         </div>
       </div>
