@@ -6,6 +6,7 @@ import NominationList from './NominationList.js';
 import firebase from './firebase';
 import 'firebase/auth';
 
+
 const auth = firebase.auth();
 
 class App extends Component {
@@ -18,10 +19,12 @@ class App extends Component {
       user: null, 
     };
 
+
     this.handleInputSubmit = this.handleInputSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.movieSearchQuery = this.movieSearchQuery.bind(this);
     this.writeUserData = this.writeUserData.bind(this);
+    this.anonSignIn = this.anonSignIn.bind(this);
   }
 
   movieSearchQuery(movieTitle) {
@@ -33,6 +36,7 @@ class App extends Component {
 
         let dataList = [...data.Search];
 
+        // TODO: 
         // this.setState({
         //   movieQueryRes: dataList[0],
         // });
@@ -55,7 +59,7 @@ class App extends Component {
     })
   }
 
-  componentDidMount() {
+  anonSignIn() {
     if (!(this.state.user)) {
       auth.signInAnonymously()
       .then(() => {
@@ -71,6 +75,11 @@ class App extends Component {
     }
   }
 
+  
+  componentDidMount() {
+    this.anonSignIn();
+  }
+
   render() {
 
     return (
@@ -84,7 +93,7 @@ class App extends Component {
             handleSubmit={this.handleInputSubmit} 
             handleChange={this.handleInputChange}/>
           <ResultList dataList={this.state.movieQueryRes} />
-          <NominationList />
+          <NominationList dataList={this.state.movieQueryRes}/>
         </div>
       </div>
     );
