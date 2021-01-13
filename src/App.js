@@ -15,10 +15,9 @@ class App extends Component {
     super();
     this.state = {
       movieSearchInput: '',
-      movieQueryRes: [],
+      movieList: [],
       user: null, 
     };
-
 
     this.handleInputSubmit = this.handleInputSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -36,10 +35,9 @@ class App extends Component {
 
         let dataList = [...data.Search];
 
-        // TODO: 
-        // this.setState({
-        //   movieQueryRes: dataList[0],
-        // });
+        this.setState({
+          movieList: dataList,
+        });
       }
     );
   }
@@ -74,7 +72,6 @@ class App extends Component {
       });
     }
   }
-
   
   componentDidMount() {
     this.anonSignIn();
@@ -92,8 +89,8 @@ class App extends Component {
             id="movie-input" 
             handleSubmit={this.handleInputSubmit} 
             handleChange={this.handleInputChange}/>
-          <ResultList dataList={this.state.movieQueryRes} />
-          <NominationList dataList={this.state.movieQueryRes}/>
+          <ResultList dataList={this.state.movieList} />
+          {/* <NominationList dataList={this.state.movieQueryRes}/> */}
         </div>
       </div>
     );
