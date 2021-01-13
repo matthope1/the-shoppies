@@ -1,20 +1,20 @@
 
-import Nomination from './Nomination';
+import Movie from './Movie';
 
 function NominaionList(props){
     // takes a list of objects and displays them
 
     return (
         <div className="NominationList">
-            {props.dataList.map((nomination,i) => {
-                // TODO:
-                let title;
-                let year;
-                let posterUrl;
+            <p>Nomination List</p>
+            {props.dataList.map((movie,i) => {
+                // TODO: you should be able to click on a movie
+                // then be taken to another page with more information on that movie
+                // use react router
 
                 return(
                     <div>
-                        <Nomination title={title} year={year} imageUrl={posterUrl} />
+                        <Movie title={movie.Title} year={movie.Year} posterUrl={movie.Poster} />
                     </div>
                 )
             })}

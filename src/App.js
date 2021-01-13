@@ -89,8 +89,9 @@ class App extends Component {
             id="movie-input" 
             handleSubmit={this.handleInputSubmit} 
             handleChange={this.handleInputChange}/>
-          <ResultList dataList={this.state.movieList} />
-          {/* <NominationList dataList={this.state.movieQueryRes}/> */}
+          <ResultList dataList={this.state.movieList} searchTerm={this.state.movieSearchInput}/>
+          {
+          /* <NominationList dataList={this.state.movieQueryRes}/> */}
         </div>
       </div>
     );
