@@ -5,7 +5,7 @@ function Movie(props) {
         <div className="Movie">
             {/* <img className="movie-poster" src={posterUrl} alt="movie-poster"/> */}
             <p>{title} ({year})</p>
-            <button>Nominate</button>
+            <button onClick={props.handleClick} disabled={props.disabled}>Nominate</button>
         </div>
     )
 }

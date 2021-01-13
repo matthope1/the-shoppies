@@ -69,9 +69,13 @@ h1, p {
 
 .ResultList {
   width: 40%;
+  display: inline-block;
 }
 
-.movie-poster {
-  width: 100px;
-  height: auto;
+
+.NominationList {
+  width: 55%;
+  margin-left: 5%;
+  display: inline-block;
+  text-align: right;
 }

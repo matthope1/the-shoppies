@@ -16,6 +16,7 @@ class App extends Component {
     this.state = {
       movieSearchInput: '',
       movieList: [],
+      nominationList: [],
       user: null, 
     };
 
@@ -24,6 +25,7 @@ class App extends Component {
     this.movieSearchQuery = this.movieSearchQuery.bind(this);
     this.writeUserData = this.writeUserData.bind(this);
     this.anonSignIn = this.anonSignIn.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   movieSearchQuery(movieTitle) {
@@ -54,6 +56,17 @@ class App extends Component {
   writeUserData(userId) {
     firebase.database().ref('users/' + userId).set({
       uid: userId
+    })
+  }
+
+  handleClick(movie) {
+
+    let newNominationList = [...this.state.nominationList];
+
+    newNominationList.push(movie);
+
+    this.setState({
+      nominationList: newNominationList,
     })
   }
 
@@ -89,9 +102,13 @@ class App extends Component {
             id="movie-input" 
             handleSubmit={this.handleInputSubmit} 
             handleChange={this.handleInputChange}/>
-          <ResultList dataList={this.state.movieList} searchTerm={this.state.movieSearchInput}/>
-          {
-          /* <NominationList dataList={this.state.movieQueryRes}/> */}
+          <ResultList 
+            dataList={this.state.movieList} 
+            searchTerm={this.state.movieSearchInput} 
+            handleClick={this.handleClick} 
+            nList={this.state.nominationList}
+          />
+          <NominationList dataList={this.state.nominationList}/> 
         </div>
       </div>
     );

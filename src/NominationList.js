@@ -14,7 +14,7 @@ function NominaionList(props){
 
                 return(
                     <div>
-                        <Movie title={movie.Title} year={movie.Year} posterUrl={movie.Poster} />
+                        <Movie title={movie.Title} year={movie.Year} posterUrl={movie.Poster}  />
                     </div>
                 )
             })}
