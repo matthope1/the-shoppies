@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import './App.css';
-import SearchForm from './SearchForm.js';
-import ResultList from './ResultList.js';
-import NominationList from './NominationList.js';
+import MovieSearchForm from './MovieSearchForm.js';
+import MovieQueryResults from './MovieQueryResults.js';
+import UserNominations from './UserNominations.js';
 import firebase from './firebase';
 import 'firebase/auth';
 
@@ -60,11 +60,8 @@ class App extends Component {
   }
 
   handleClick(movie) {
-
     let newNominationList = [...this.state.nominationList];
-
     newNominationList.push(movie);
-
     this.setState({
       nominationList: newNominationList,
     })
@@ -91,24 +88,23 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <div className="App">
         <div className="wrapper">
           <h1>The Shoppies</h1>
-          <SearchForm 
+          <MovieSearchForm 
             label="Movie Title" 
             placeholder="Search Movies"
             id="movie-input" 
             handleSubmit={this.handleInputSubmit} 
             handleChange={this.handleInputChange}/>
-          <ResultList 
+          <MovieQueryResults 
             dataList={this.state.movieList} 
             searchTerm={this.state.movieSearchInput} 
             handleClick={this.handleClick} 
             nList={this.state.nominationList}
           />
-          <NominationList dataList={this.state.nominationList}/> 
+          <UserNominations dataList={this.state.nominationList}/> 
         </div>
       </div>
     );

@@ -1,6 +1,6 @@
-function Search(props) {
+function MovieSearchForm(props) {
     return (
-        <div className="Search">
+        <div className="MovieSearchForm">
             <form onSubmit={props.handleSubmit}> 
                 <div>
                     <label>{props.label}</label>
@@ -11,4 +11,4 @@ function Search(props) {
         </div>
     )
 }
-export default Search;
+export default MovieSearchForm;

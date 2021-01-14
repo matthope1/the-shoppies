@@ -1,12 +1,11 @@
 
 import Movie from './Movie';
 
-function NominaionList(props){
+function UserNominations(props){
     // takes a list of objects and displays them
-
     return (
-        <div className="NominationList">
-            <p>Nomination List</p>
+        <div className="UserNominations">
+            <p>Nominations</p>
             {props.dataList.map((movie,i) => {
                 // TODO: you should be able to click on a movie
                 // then be taken to another page with more information on that movie
@@ -14,7 +13,7 @@ function NominaionList(props){
 
                 return(
                     <div>
-                        <Movie title={movie.Title} year={movie.Year} posterUrl={movie.Poster}  />
+                        <Movie key={i} title={movie.Title} year={movie.Year} posterUrl={movie.Poster}  />
                     </div>
                 )
             })}
@@ -25,4 +24,4 @@ function NominaionList(props){
     )
 }
 
-export default NominaionList;
+export default UserNominations;
