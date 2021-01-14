@@ -30,13 +30,10 @@ class App extends Component {
   }
 
   movieSearchQuery(movieTitle) {
-    console.log(movieTitle);
     const endPoint = `http://www.omdbapi.com/?s=${movieTitle}&apikey=82a91ad2`;
     fetch(endPoint)
     .then(response => response.json())
     .then(data => {
-      console.log("data:", data);
-      console.log("response:", data.Response);
         if (data.Response === "True") {
           let dataList = [...data.Search];
           this.setState({
@@ -82,7 +79,7 @@ class App extends Component {
 
     let found = -1;
     for (let i = 0; i < newNominationList.length; i ++) {
-      if (newNominationList[i].Title == title) {
+      if (newNominationList[i].Title === title) {
           found = i;
       }
     }
@@ -117,26 +114,35 @@ class App extends Component {
   }
 
   render() {
+
+    let display = 'banner banner-hide';
+    if (this.state.nominationList.length >= 5) {
+      display = 'banner banner-show';
+    }
     return (
       <div className="App">
         <div className="wrapper">
           <h1>The Shoppies</h1>
+          <h2 className={display}> YOU HAVE 5 NOMINATIONS</h2>
           <MovieSearchForm 
             label="Movie Title" 
             placeholder="Search Movies"
             id="movie-input" 
             handleSubmit={this.handleInputSubmit} 
             handleChange={this.handleInputChange}/>
-          <MovieQueryResults 
-            dataList={this.state.movieList} 
-            searchTerm={this.state.movieSearchInput} 
-            addNewNomination={this.addNewNomination} 
-            nList={this.state.nominationList}
-          />
-          <UserNominations 
-            dataList={this.state.nominationList}
-            removeNomination={this.removeNomination}
-          /> 
+
+          <div className="flex-parent">
+            <MovieQueryResults 
+              dataList={this.state.movieList} 
+              searchTerm={this.state.movieSearchInput} 
+              addNewNomination={this.addNewNomination} 
+              nList={this.state.nominationList}
+            />
+            <UserNominations 
+              dataList={this.state.nominationList}
+              removeNomination={this.removeNomination}
+            /> 
+          </div>
         </div>
       </div>
     );

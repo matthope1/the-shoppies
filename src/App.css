@@ -78,3 +78,31 @@ h1, p {
   display: inline-block;
   text-align: right;
 }
+
+.banner {
+  position: absolute;
+}
+
+.banner-hide {
+  top: -400px;
+}
+
+/* Banner animation */
+
+@keyframes bannerAnimation {
+  from {top: -400px;}
+  to {top: 0;}
+}
+
+.banner-show {
+  display: block;
+  top: 0;
+  animation-name: bannerAnimation;
+  animation-duration: 4s;
+}
+
+
+
+.flex-parent {
+  display: flex;
+}
