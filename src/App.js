@@ -25,7 +25,7 @@ class App extends Component {
     this.movieSearchQuery = this.movieSearchQuery.bind(this);
     this.writeUserData = this.writeUserData.bind(this);
     this.anonSignIn = this.anonSignIn.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.addNewNomination= this.addNewNomination.bind(this);
   }
 
   movieSearchQuery(movieTitle) {
@@ -59,7 +59,7 @@ class App extends Component {
     })
   }
 
-  handleClick(movie) {
+  addNewNomination(movie) {
     let newNominationList = [...this.state.nominationList];
     newNominationList.push(movie);
     this.setState({
@@ -101,7 +101,7 @@ class App extends Component {
           <MovieQueryResults 
             dataList={this.state.movieList} 
             searchTerm={this.state.movieSearchInput} 
-            handleClick={this.handleClick} 
+            addNewNomination={this.addNewNomination} 
             nList={this.state.nominationList}
           />
           <UserNominations dataList={this.state.nominationList}/> 

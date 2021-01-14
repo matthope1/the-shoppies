@@ -14,7 +14,7 @@ function MovieQueryResults(props) {
                     disabled = true;
                 }
                 return (
-                    <Movie key={i} disabled={disabled} title={movie.Title} year={movie.Year} posterUrl={movie.Poster} handleClick={() => props.handleClick(movie)} />
+                    <Movie key={i} disabled={disabled} title={movie.Title} year={movie.Year} posterUrl={movie.Poster} addNewNomination={() => props.addNewNomination(movie)} />
                 )
             })}
         </div>
