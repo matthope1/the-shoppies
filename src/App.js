@@ -25,18 +25,16 @@ class App extends Component {
     this.movieSearchQuery = this.movieSearchQuery.bind(this);
     this.writeUserData = this.writeUserData.bind(this);
     this.anonSignIn = this.anonSignIn.bind(this);
-    this.addNewNomination= this.addNewNomination.bind(this);
+    this.addNewNomination = this.addNewNomination.bind(this);
+    this.removeNomination = this.removeNomination.bind(this);
   }
 
   movieSearchQuery(movieTitle) {
-    let endPoint = `http://www.omdbapi.com/?s=${movieTitle}&apikey=82a91ad2`;
-
+    const endPoint = `http://www.omdbapi.com/?s=${movieTitle}&apikey=82a91ad2`;
     fetch(endPoint)
     .then(response => response.json())
     .then(data => {
-
         let dataList = [...data.Search];
-
         this.setState({
           movieList: dataList,
         });
@@ -64,6 +62,27 @@ class App extends Component {
     newNominationList.push(movie);
     this.setState({
       nominationList: newNominationList,
+    })
+  }
+
+  removeNomination(movie) {
+    let newNominationList = [...this.state.nominationList];
+
+    let title = movie.Title;
+
+    let found = -1;
+    for (let i = 0; i < newNominationList.length; i ++) {
+      if (newNominationList[i].Title == title) {
+          found = i;
+      }
+    }
+
+    if (found > -1) {
+      newNominationList.splice(found,1);
+    }
+
+    this.setState({
+      nominationList: newNominationList
     })
   }
 
@@ -104,7 +123,10 @@ class App extends Component {
             addNewNomination={this.addNewNomination} 
             nList={this.state.nominationList}
           />
-          <UserNominations dataList={this.state.nominationList}/> 
+          <UserNominations 
+            dataList={this.state.nominationList}
+            removeNomination={this.removeNomination}
+          /> 
         </div>
       </div>
     );

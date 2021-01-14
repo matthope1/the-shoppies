@@ -13,7 +13,7 @@ function UserNominations(props){
 
                 return(
                     <div>
-                        <Movie key={i} title={movie.Title} year={movie.Year} posterUrl={movie.Poster}  />
+                        <Movie key={i} title={movie.Title} year={movie.Year} posterUrl={movie.Poster} removeNomination={() => props.removeNomination(movie)} />
                     </div>
                 )
             })}
