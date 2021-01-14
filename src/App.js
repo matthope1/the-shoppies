@@ -30,14 +30,22 @@ class App extends Component {
   }
 
   movieSearchQuery(movieTitle) {
+    console.log(movieTitle);
     const endPoint = `http://www.omdbapi.com/?s=${movieTitle}&apikey=82a91ad2`;
     fetch(endPoint)
     .then(response => response.json())
     .then(data => {
-        let dataList = [...data.Search];
-        this.setState({
-          movieList: dataList,
-        });
+      console.log("data:", data);
+      console.log("response:", data.Response);
+        if (data.Response === "True") {
+          let dataList = [...data.Search];
+          this.setState({
+            movieList: dataList,
+          });
+        }
+        else {
+          console.log("no data yet");
+        }
       }
     );
   }
@@ -48,7 +56,9 @@ class App extends Component {
   }
 
   handleInputChange(event) {
-    this.setState({movieSearchInput: event.target.value});
+    this.setState({movieSearchInput: event.target.value}, (() => {
+      this.movieSearchQuery(this.state.movieSearchInput);
+    }));
   }
 
   writeUserData(userId) {
