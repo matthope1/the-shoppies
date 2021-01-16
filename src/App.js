@@ -92,7 +92,8 @@ class App extends Component {
   }
 
   removeNomination(movie) {
-
+    // TODO: remove the movie from the current users nomination list in firebase 
+    
     let userData = this.readUserData(this.state.userId);
     console.log("userData: ", userData);
 
