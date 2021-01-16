@@ -24,6 +24,7 @@ class App extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.movieSearchQuery = this.movieSearchQuery.bind(this);
     this.writeUserData = this.writeUserData.bind(this);
+    this.readUserData = this.readUserData.bind(this);
     this.anonSignIn = this.anonSignIn.bind(this);
     this.addNewNomination = this.addNewNomination.bind(this);
     this.removeNomination = this.removeNomination.bind(this);
@@ -58,10 +59,25 @@ class App extends Component {
     }));
   }
 
-  writeUserData(userId) {
+  writeUserData(userId, nominationList) {
     firebase.database().ref('users/' + userId).set({
-      uid: userId
+      uid: userId,
+      nominationList
     })
+  }
+
+  readUserData(userId) {
+    // var nominationListRef = firebase.database().ref('users/' + userId + '/nominationList');
+    //   nominationListRef.on('value', (snapshot) => {
+    //   const data = snapshot.val();
+    //   console.log(data);
+    // });
+
+    // var userId = firebase.auth().currentUser.uid;
+    // return firebase.database().ref('/users/' + userId).once('value').then((snapshot) => {
+    //   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+    //   // ...
+    // });
   }
 
   addNewNomination(movie) {
@@ -69,10 +85,17 @@ class App extends Component {
     newNominationList.push(movie);
     this.setState({
       nominationList: newNominationList,
-    })
+    });
+
+    this.writeUserData(this.state.user.uid, newNominationList);
+
   }
 
   removeNomination(movie) {
+
+    let userData = this.readUserData(this.state.userId);
+    console.log("userData: ", userData);
+
     let newNominationList = [...this.state.nominationList];
 
     let title = movie.Title;
@@ -93,12 +116,17 @@ class App extends Component {
     })
   }
 
-  anonSignIn() {
+  async anonSignIn() {
     if (!(this.state.user)) {
       auth.signInAnonymously()
       .then(() => {
         this.setState({user: auth.currentUser}, function() {
-          this.writeUserData(this.state.user.uid);
+        });
+      }).then(() => {
+        let nominationListRef = firebase.database().ref('users/' + this.state.user.uid + '/nominationList');
+        nominationListRef.on('value', (snapshot) => {
+          const data = snapshot.val();
+          this.setState({nominationList: data});
         });
       })
       .catch((error) => {

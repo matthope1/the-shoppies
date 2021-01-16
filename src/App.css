@@ -88,20 +88,19 @@ h1, p {
 }
 
 /* Banner animation */
-
 @keyframes bannerAnimation {
-  from {top: -400px;}
-  to {top: 0;}
+  0% {top: -200px;}
+  50% {top: -100px;}
+  75% {top: 0;}
+  100% {top: -200px;}
 }
 
 .banner-show {
-  display: block;
-  top: 0;
+  /* display: block; */
+  top: -200px;
   animation-name: bannerAnimation;
   animation-duration: 4s;
 }
-
-
 
 .flex-parent {
   display: flex;
