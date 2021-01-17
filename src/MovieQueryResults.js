@@ -9,12 +9,23 @@ function MovieQueryResults(props) {
             <p>Results for "{props.searchTerm}"</p>
             {props.dataList.map((movie,i) => {
 
-                let disabled = false;
-                if (props.nList.includes(movie)) {
-                    disabled = true;
+                const title = movie.Title;
+
+                let found = false;
+
+                try  {
+                    for (let i = 0; i < props.nList.length; i ++) {
+                        if (props.nList[i].Title === title) {
+                            found = true;
+                        }
+                    }
                 }
+                catch(err) {
+                    console.log("error: ", err);
+                }
+                
                 return (
-                    <Movie key={i} disabled={disabled} title={movie.Title} year={movie.Year} posterUrl={movie.Poster} addNewNomination={() => props.addNewNomination(movie)} />
+                    <Movie key={i} disabled={found} title={movie.Title} year={movie.Year} posterUrl={movie.Poster} addNewNomination={() => props.addNewNomination(movie)} />
                 )
             })}
         </div>

@@ -24,7 +24,6 @@ class App extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.movieSearchQuery = this.movieSearchQuery.bind(this);
     this.writeUserData = this.writeUserData.bind(this);
-    this.readUserData = this.readUserData.bind(this);
     this.anonSignIn = this.anonSignIn.bind(this);
     this.addNewNomination = this.addNewNomination.bind(this);
     this.removeNomination = this.removeNomination.bind(this);
@@ -66,20 +65,6 @@ class App extends Component {
     })
   }
 
-  readUserData(userId) {
-    // var nominationListRef = firebase.database().ref('users/' + userId + '/nominationList');
-    //   nominationListRef.on('value', (snapshot) => {
-    //   const data = snapshot.val();
-    //   console.log(data);
-    // });
-
-    // var userId = firebase.auth().currentUser.uid;
-    // return firebase.database().ref('/users/' + userId).once('value').then((snapshot) => {
-    //   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-    //   // ...
-    // });
-  }
-
   addNewNomination(movie) {
     let newNominationList = [...this.state.nominationList];
     newNominationList.push(movie);
@@ -93,15 +78,11 @@ class App extends Component {
 
   removeNomination(movie) {
     // TODO: remove the movie from the current users nomination list in firebase 
-    
-    let userData = this.readUserData(this.state.userId);
-    console.log("userData: ", userData);
 
     let newNominationList = [...this.state.nominationList];
-
     let title = movie.Title;
-
     let found = -1;
+
     for (let i = 0; i < newNominationList.length; i ++) {
       if (newNominationList[i].Title === title) {
           found = i;
@@ -114,7 +95,9 @@ class App extends Component {
 
     this.setState({
       nominationList: newNominationList
-    })
+    },() => {
+      this.writeUserData(this.state.user.uid, newNominationList);
+    });
   }
 
   async anonSignIn() {
@@ -127,7 +110,9 @@ class App extends Component {
         let nominationListRef = firebase.database().ref('users/' + this.state.user.uid + '/nominationList');
         nominationListRef.on('value', (snapshot) => {
           const data = snapshot.val();
-          this.setState({nominationList: data});
+          if (data) {
+            this.setState({nominationList: data});
+          }
         });
       })
       .catch((error) => {
