@@ -37,6 +37,7 @@ h1, p {
 .MovieQueryResults,
 .UserNominations{
   background-color: #fff;
+  margin-top: 10px;
 }
 
 .MovieSearchForm {
@@ -62,21 +63,30 @@ h1, p {
 
 .MovieSearchForm button {
   width: 15%;
-  background-color: #bf40bf;
+  background-color: #DB5461;
   border: none;
   height: 35px;
 }
 
 .MovieQueryResults {
-  width: 40%;
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
 }
 
-.UserNominations{
-  width: 55%;
-  margin-left: 5%;
-  display: inline-block;
-  text-align: right;
+.MovieQueryResults > .Movie {
+  width: calc((100% / 4) - 5px);
+}
+
+.UserNominations {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.UserNominations > div {
+  width: calc(100% / 3);
 }
 
 .banner {
@@ -96,7 +106,6 @@ h1, p {
 }
 
 .banner-show {
-  /* display: block; */
   top: -200px;
   animation-name: bannerAnimation;
   animation-duration: 4s;
@@ -104,4 +113,37 @@ h1, p {
 
 .flex-parent {
   display: flex;
+}
+
+.Movie {
+  border: solid;
+  border-color: black;
+  padding: 5px;
+  margin: 5px;
+}
+
+.MovieSearchForm,
+.MovieQueryResults,
+.UserNominations {
+  box-shadow: 0 2px 2px rgba(0,0,0,0.20);
+}
+
+/* media queries */
+
+@media (max-width: 940px) {
+  .MovieQueryResults > .Movie {
+    width: calc((100% / 3) - 15px);
+  }
+}
+
+@media (max-width: 768px) {
+
+}
+
+@media (max-width: 480px) {
+  .UserNominations > div,
+  .MovieQueryResults > .Movie {
+    width: 70%;
+    margin: 0 auto;
+  }
 }

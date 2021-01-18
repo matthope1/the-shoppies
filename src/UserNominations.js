@@ -4,7 +4,7 @@ import Movie from './Movie';
 function UserNominations(props){
     return (
         <div className="UserNominations">
-            <p>Nominations</p>
+            {/* <p>Your Nominations</p> */}
             {props.dataList.map((movie,i) => {
                 return(
                     <div>

@@ -6,14 +6,13 @@ function MovieQueryResults(props) {
 
     return ( 
         <div className="MovieQueryResults">
-            <p>Results for "{props.searchTerm}"</p>
+            {/* <p>Results for "{props.searchTerm}"</p> */}
             {props.dataList.map((movie,i) => {
 
                 const title = movie.Title;
-
                 let found = false;
 
-                try  {
+                try {
                     for (let i = 0; i < props.nList.length; i ++) {
                         if (props.nList[i].Title === title) {
                             found = true;
