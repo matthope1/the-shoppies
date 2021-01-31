@@ -1,6 +1,5 @@
 import {Component, useEffect, useState} from 'react';
 
-
 class MovieDetails extends Component {
     componentDidMount() {
         const endPoint = `http://www.omdbapi.com/?i=${this.props.imdbID}`

@@ -100,13 +100,11 @@ class App extends Component {
     });
   }
 
-  async anonSignIn() {
+  anonSignIn() {
     if (!(this.state.user)) {
       auth.signInAnonymously()
+      .then(() => this.setState({user: auth.currentUser}))
       .then(() => {
-        this.setState({user: auth.currentUser}, function() {
-        });
-      }).then(() => {
         let nominationListRef = firebase.database().ref('users/' + this.state.user.uid + '/nominationList');
         nominationListRef.on('value', (snapshot) => {
           const data = snapshot.val();
@@ -117,7 +115,6 @@ class App extends Component {
       })
       .catch((error) => {
         var errorCode = error.code;
-        var errorMessage = error.message;
         console.log(errorCode);
       });
     }
