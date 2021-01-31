@@ -100,7 +100,7 @@ class App extends Component {
     });
   }
 
-  anonSignIn() {
+  async anonSignIn() {
     if (!(this.state.user)) {
       auth.signInAnonymously()
       .then(() => this.setState({user: auth.currentUser}))
@@ -121,20 +121,18 @@ class App extends Component {
   }
   
   componentDidMount() {
-    this.anonSignIn();
+    this.anonSignIn()
   }
 
   render() {
-    let display = 'banner banner-hide';
-    if (this.state.nominationList.length >= 5) {
-      display = 'banner banner-show';
-    }
+    let bannerVisibility = this.state.nominationList.length >= 5 ? 'show' : 'hide';
+    let bannerClassName = 'banner banner-' + bannerVisibility;
     return (
       <Router basename={process.env.PUBLIC_URL}>
         <div className="App">
+          <span className={bannerClassName}> YOU HAVE 5 NOMINATIONS!</span>
           <div className="wrapper">
             <h1>The Shoppies</h1>
-            <h2 className={display}> YOU HAVE 5 NOMINATIONS</h2>
             <MovieSearchForm 
               label="Movie Title" 
               placeholder="Search Movies"
